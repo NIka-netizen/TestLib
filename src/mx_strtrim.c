@@ -1,7 +1,6 @@
 #include "../inc/libmx.h"
 
-static int space_before(const char *str, int length)
-{
+static int space_before(const char *str, int length) {
     int count = 0;
     for (int i = 0; i < length; i++)
     {
@@ -12,8 +11,7 @@ static int space_before(const char *str, int length)
     }
     return count;
 }
-static int space_after(const char *str, int length)
-{
+static int space_after(const char *str, int length) {
     int count = 0;
     for (int i = length - 1; i > 0; i--)
     {
@@ -25,8 +23,7 @@ static int space_after(const char *str, int length)
     return count;
 }
 
-char *mx_strtrim(const char *str)
-{
+char *mx_strtrim(const char *str) {
     if(str == NULL)
         return NULL;
     int length = mx_strlen(str);

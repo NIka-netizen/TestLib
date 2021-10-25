@@ -1,19 +1,19 @@
 #include "../inc/libmx.h"
 
-char *mx_file_to_str(const char *filename) {    
-    int file;
+char *mx_file_to_str(const char *file) {    
+    int file2;
     char *result = NULL;
     int count = 0;
     char c;
 
-    file = open(filename, O_RDONLY);
-    while (read(file, &c, 1))
+    file2 = open(file, O_RDONLY);
+    while (read(file2, &c, 1))
         count++;
-    close(file);
-    file = open(filename, O_RDONLY);
+    close(file2);
+    file2 = open(file, O_RDONLY);
     result = mx_strnew(count);
-    read(file, result, count);
-    close(file);
+    read(file2, result, count);
+    close(file2);
 
     char s[1];
     int n;
@@ -32,10 +32,10 @@ char *mx_file_to_str(const char *filename) {
     }
 
 
-    file = open(filename, O_RDONLY);
+    file2 = open(file, O_RDONLY);
     char *res = (char *)malloc(count + 1);
 
-    n = read(file, s, 1);
+    n = read(file2, s, 1);
 
     for(int i = 0; i < count && n > 0; ++i) 
     {
@@ -44,10 +44,10 @@ char *mx_file_to_str(const char *filename) {
             res[i] = s[0];
             ++i;
         }
-        n = read(file, s, 1);
+        n = read(file2, s, 1);
         --i;
     }
     res[count] = '\0';
-    close(file);
+    close(file2);
     return res;
 }

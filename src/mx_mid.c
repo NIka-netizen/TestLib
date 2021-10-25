@@ -1,22 +1,14 @@
 #include "../inc/libmx.h"
 
-int mx_max(int a, int b, int c){
-    if(a < b){
-        if(a > c){
-            return a;
-        }
-        else if(b > c){
-            return c;
-        }
-        else{
-            return b;
-        }
-    }
-    else if(a < c){
-        return a;
-    }
-    else {
-        return b;
-    }
+int mx_mid(int a, int b, int c) {
+    int mid;
+
+    if ((a <= b && b <= c) || (c <= b && b <= a))
+        mid = b;
+    if ((b <= c && c <= a) || (a <= c && c <= b))
+        mid = c;
+    if ((b <= a && a <= c) || (c <= a && a <= b))
+        mid = a;
+    return mid;
 }
 

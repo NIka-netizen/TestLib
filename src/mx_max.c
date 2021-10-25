@@ -1,19 +1,15 @@
 #include "../inc/libmx.h"
 
-int mx_max(int a, int b, int c){
-    if(a > b){
-        if(a > c){
+int mx_max(int a, int b, int c) {
+    if(a > b) {
+        if(a > c)
             return a;
-        }
-        else{
+        else
             return c;
-        }
     }
-    if(b > c){
+    if(b > c) 
         return b;
-    }
-    else{
+    else 
         return c;
-    }
 }
 

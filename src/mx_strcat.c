@@ -1,7 +1,6 @@
 #include "../inc/libmx.h"
 
 char *mx_strcat(char *s1, const char *s2) {
-    int i = 0;
     char *k = s1;
     
     while (*s1 != mx_strlen(s1)) {

@@ -1,46 +1,53 @@
 #include "../inc/libmx.h"
 
-int mx_quicksort(char** arr, int left, int right) {
-    int j = left + (right - left) / 2;
-    int count = 0, left2 = left, right2 = right;
 
-    if (arr == NULL) return -1;
+void mx_swap_str(char **s1, char **s2) {
+	char *buf = *s1;
+	*s1 = *s2;
+	*s2 = buf;
+}
 
-    while (left2 <= right2) {
-        for (int i = left; i <= right; i++) {
-            if (mx_strlen(arr[i]) > mx_strlen(arr[j])) {
-                left2 = i;
-                break;
-            }
-        }
-        for (int k = right; k >= left; k--) {
-            if (mx_strlen(arr[k]) < mx_strlen(arr[j])) {
-                right2 = k;
-                break;
-            }
-        }
-        if (i == j && right2 != j) {
-            left2 = i;
-            j = right2;
-        }
-        else if (k== j && left2 != j) {
-            right2 = k;
-            j = left2;
-        }
-        if (mx_strlen(arr[left2]) > mx_strlen(arr[right2])){
-            mx_swap_str(&arr[left2], &arr[right2]);
-            count++;
-        }
-        left2++;
-        right2--;
-    }
-    left2 = j + 1;
-    right2 = j - 1;
-    if (right2 != left)
-        count = count + mx_quicksort(arr, left, right2);
-    if (light2 != right)
-        count = count + mx_quicksort(arr, left2, right);
-    return count;
+int mx_quicksort(char **arr, int left, int right) {
+	int l = left;
+	int r = right;
+	int p = left + (right - left)/2;
+	int count = 0;
+	
+	if (arr == NULL)
+		return -1;
+	while (l < r) {
+		
+		for (int i = left; i <= p; i++) {
+			
+			if (mx_strlen(arr[i]) > mx_strlen(arr[p])) {
+				l = i;
+				break;
+			}
+		}
+		for (int j = right; j >= p; j--) {
+
+			if (mx_strlen(arr[j]) < mx_strlen(arr[p])) {
+        	    r = j;
+            	break;
+			}
+			 
+		}
+
+		if (mx_strlen(arr[l]) > mx_strlen(arr[r])) {
+			mx_swap_str(&arr[l], &arr[r]);
+			count++;
+		}
+	
+	l++;
+    r--;
+	}
+	
+	if (l != right)
+		count = count + mx_quicksort(arr, l, right);
+	if (r != left)
+		count = count + mx_quicksort(arr, left, r);	
+
+	return count;
 }
 
 

@@ -1,7 +1,6 @@
 #include "../inc/libmx.h"
 
-char **mx_strsplit(char const *s, char c) 
-{
+char **mx_strsplit(char const *s, char c) {
 	int count_words = mx_count_words(s, c);
 	int j = 0;
 	char **result = (char**)malloc(8 * count_words);

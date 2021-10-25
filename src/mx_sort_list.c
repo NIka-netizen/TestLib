@@ -1,18 +1,24 @@
 #include "../inc/libmx.h"
 
-static void swap(void **s1, void **s2) 
-{
-    void *temp = *s1;
-    *s1 = *s2;
-    *s2 = temp;
+t_list *mx_sort_list(t_list *lst, bool (*cmp)(void *, void *)) {
+	t_list *pli = lst;
+	t_list *plj = lst;
+	t_list *buf;
+
+	while (pli->next != NULL) {
+		while (plj->next != NULL) {
+			if (cmp(plj->data, plj->next->data)) {
+				buf = mx_create_node(plj->data);
+				plj->data = plj->next->data;
+				plj->next->data = buf->data;
+				free(buf);
+			}
+			plj = plj->next;
+		}
+		plj = lst;
+		pli = pli->next;
+	}
+	return lst;
 }
 
-t_list *mx_sort_list(t_list *list, bool (*cmp)(void *, void *)) {
-    if (list && cmp)
-        for (t_list *temp1 = list; temp1; temp1 = temp1->next)
-            for (t_list *temp2 = list; temp2->next; temp2 = temp2->next)
-                if (cmp(temp2->data, temp2->next->data))
-                    swap(&temp2->data, &temp2->next->data);  
-  
-    return list;
-}
+

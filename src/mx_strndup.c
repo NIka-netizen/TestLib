@@ -1,8 +1,8 @@
 #include "../inc/libmx.h"
 
-char *mx_strndup(const char *s1, int n) {
+char *mx_strndup(const char *s1, size_t n) {
     char *duplicate = NULL;
-    int length = mx_strlen(s1);
+    size_t length = mx_strlen(s1);
 
     if (n < length)
         length = n;

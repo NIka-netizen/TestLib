@@ -24,4 +24,3 @@ int mx_atoi(const char *str) {
     return result;
 }
 
-
