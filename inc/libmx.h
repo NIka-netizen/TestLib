@@ -7,9 +7,11 @@
 #include <stdlib.h>
 #include <fcntl.h>
 #include <wchar.h>
+#include <malloc/malloc.h>
 
 void mx_printchar(char c);
 int mx_read_line(char **lineptr, size_t buf_size, char delim, const int fd);
+int mx_file_length(const char *file); 
 char *mx_strcat(char *s1, const char *s2);
 char *mx_strjoin(char const *s1, char const *s2);
 int mx_strlen(const char *s);

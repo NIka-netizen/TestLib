@@ -1,15 +1,17 @@
 #include "../inc/libmx.h"
 
-int mx_count_substr(const char* str, const char* sub) {
-    int counter = 0;
-    const char* temp_str = str;
+int mx_count_substr(const char *str, const char *sub) {
+	if (!str || !sub) {
+		return -1;
+	}
 
-    while (mx_strstr(temp_str, sub)) {
-        temp_str = mx_strstr(temp_str, sub);
-        for (int i = 0; i < mx_strlen(sub); i++) {
-            temp_str++;
-        }
-        counter++;
-    }
-    return counter;
+	int length_sub = mx_strlen(sub);
+	int count = 0;
+
+	for (str = mx_strstr(str, sub); str; str = mx_strstr(str + length_sub, sub)) {
+		count++;
+	}
+
+	return count;
 }
+

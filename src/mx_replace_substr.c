@@ -1,46 +1,29 @@
 #include "../inc/libmx.h"
 
-int mx_index(const char *str, const char *subi, int count) {
-	int j = 0;
-	int k;
-
-	if (str == NULL || subi == NULL)
-		return -2;
-	for (int i = 0; i < mx_strlen(str); i++) {
-		if (str[i] == subi[j]) {
-			k = i;
-			while (str[k] == subi[j]) {
-				if (j == mx_strlen(subi) - 1 && count == 0)
-					return i;
-				k++;
-				j++;
-			}
-			count--;
-			j = 0;
-		}
-	}
-	return -1;
-}
-
 char *mx_replace_substr(const char *str, const char *sub, const char *replace) {
-	char *news = NULL;
-	int j = 0;
-	int count = 0;
-	int mult = mx_count_substr(str, sub);
+    if (!str || !sub || !replace || mx_strlen(str) <= mx_strlen(sub)) {
+        return NULL;
+    }
+    
+    int count_sub = mx_count_substr(str, sub);
+    int len_new = mx_strlen(str) - count_sub * mx_strlen(sub) + count_sub * mx_strlen(replace);
+    char *temp_str = mx_strnew(len_new);
+    int k = 0;
+    for (int i = 0; i < len_new;) {
+        int index_sub = mx_get_substr_index(str + k, sub) + k;
+        if (k == index_sub) {
+            for (int j = 0; j < mx_strlen(replace); j++) {
+                temp_str[i + j] = replace[j];
+            }
+            i += mx_strlen(replace);
+            k += mx_strlen(sub);
+        }
+        else {
+            temp_str[i] = str[k];
+            k++;
+            i++;
+        }
+    }
 
-	news =  mx_strnew(mx_strlen(str) - mx_strlen(sub) * mult + mx_strlen(replace) * mult);
-	if (news == NULL || str == NULL || sub == NULL || replace == NULL)
-		return NULL;
-	for (int i = 0; i < mx_strlen(str); i++) {
-		if (i == mx_index(str, sub, count)) {
-			mx_strcpy(&news[j], replace);
-			i = i + mx_strlen(sub);
-			j = j + mx_strlen(replace);
-			count++;
-		}
-		news[j] = str[i];
-		j++;
-	}
-	return news;
+    return temp_str;
 }
-

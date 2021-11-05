@@ -1,34 +1,42 @@
 #include "../inc/libmx.h"
 
-static int number_length(int number) {
-	int length = 0;
-
-	while (number) {
-		number /= 10;
-		length++;
-	}
-	return length;
-}
-
 char *mx_itoa(int number) {
-	int length = number_length(number);
-	int tmp = number;
-	char *result = NULL;
+    bool flag = false;
 
-	result = mx_strnew(length);
-	if (number == 0)
-		return mx_strcpy(result, "0");
-	if (number == -2147483648)
-		return mx_strcpy(result, "-2147483648");
-	tmp = number;
-	for (int i = 0; i < length; i++) {
-		if (tmp < 0) {
-			result[length] = '-';
-			tmp = -tmp;
-		}
-		result[i] = (tmp % 10) + '0';
-		tmp /= 10;
+    if (number < 0) {
+        flag = true;
+		number = -number;
 	}
-	mx_str_reverse(result);
-	return result;
+
+    int tmp_nbr = number;
+	int len = 0;
+    char *num_str = NULL;
+
+	while(tmp_nbr > 0) {
+        tmp_nbr /= 10;
+		len++;
+	}
+
+    num_str = mx_strnew(len);
+
+    if (number == 0)
+		return mx_strcpy(num_str, "0");
+	if (number == -2147483648)
+		return mx_strcpy(num_str, "-2147483648");
+    if (flag) {
+		num_str[0] = '-';
+	}
+    if(flag) {
+        for (int i = len; i > 0; i--) {
+            num_str[i] = number % 10 + 48;
+            number /= 10;
+        }
+    }
+    else {
+        for (int i = len-1; i >= 0; i--) {
+            num_str[i] = number % 10 + 48;
+            number /= 10;
+        }
+    }
+    return num_str;
 }
